@@ -8,39 +8,39 @@ import { CategoryEntity } from './entities/category.entity';
 
 @Injectable()
 export class CategoriesService {
-  constructor(@InjectRepository(CategoryEntity) private readonly categoryEntity: Repository<CategoryEntity>){}
+  constructor(@InjectRepository(CategoryEntity) private readonly categoryEntity: Repository<CategoryEntity>) { }
 
   async create(createCategoryDto: CreateCategoryDto, currentUser: UserEntity): Promise<CategoryEntity> {
     const createCat = await this.categoryEntity.create(createCategoryDto)
-    createCat.addedBy= currentUser
+    createCat.addedBy = currentUser
     return this.categoryEntity.save(createCat);
   }
 
-  async findAll() :Promise<CategoryEntity[]> {
+  async findAll(): Promise<CategoryEntity[]> {
     return await this.categoryEntity.find();
   }
 
-  async findOne(id: number) : Promise<CategoryEntity>{
+  async findOne(id: number): Promise<CategoryEntity> {
     const findOneCat = await this.categoryEntity.findOne({
-      where:{id:id},
-      relations: {addedBy:true},
+      where: { id: id },
+      relations: { addedBy: true },
       select: {
-        addedBy:{
+        addedBy: {
           name: true,
           email: true
         }
       }
     })
-    if(!findOneCat){
-      throw new HttpException({message: 'Not found cat id'}, HttpStatus.BAD_REQUEST)
+    if (!findOneCat) {
+      throw new HttpException({ message: 'Not found cat id' }, HttpStatus.BAD_REQUEST)
     }
     return findOneCat;
   }
 
-  async update(id: number, fields:Partial<UpdateCategoryDto>): Promise<CategoryEntity> {
+  async update(id: number, fields: Partial<UpdateCategoryDto>): Promise<CategoryEntity> {
     const upCat = await this.findOne(id);
-    if(!upCat){
-      throw new HttpException({message: 'Not found'}, HttpStatus.BAD_REQUEST)
+    if (!upCat) {
+      throw new HttpException({ message: 'Not found' }, HttpStatus.BAD_REQUEST)
     }
     Object.assign(upCat, fields)
 

@@ -26,5 +26,5 @@ export class CreateProductDto {
 
     @IsNotEmpty()
     @IsNumber({}, {message: 'Cat should be a number'})
-    category: number
+    categoryId: number
 }
