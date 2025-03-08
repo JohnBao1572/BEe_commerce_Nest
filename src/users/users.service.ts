@@ -57,6 +57,7 @@ export class UsersService {
         id: user.id,
         name: user.name,
         email: user.email,
+        password: user.password,
         role: user.role,
         accToken, refreshToken
       };
