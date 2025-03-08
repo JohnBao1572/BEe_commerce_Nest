@@ -3,7 +3,8 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserEntity } from './entities/user.entity';
-import { createUserDto } from './dto/user.Dto';
+import { createUserDto, loginUserDto } from './dto/user.Dto';
+import { CurrentUser } from 'src/util/decorators/current-user.decorator';
 
 @Controller('users')
 export class UsersController {
@@ -14,14 +15,19 @@ export class UsersController {
     return await this.usersService.signup(CreateUserDto);
   }
 
-  @Get()
-  findAll() {
-    return this.usersService.findAll();
+  @Post('login')
+  async login (@Body() LoginUserDto: loginUserDto): Promise<any>{
+    return await this.usersService.login(LoginUserDto)
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+  @Get('getAllUser')
+  async findAll():Promise<UserEntity[]> {
+    return await this.usersService.findAll();
+  }
+
+  @Get('get/:id')
+  async findOne(@Param('id') id: string): Promise<UserEntity> {
+    return await this.usersService.findOne(+id);
   }
 
   @Patch(':id')
@@ -32,5 +38,10 @@ export class UsersController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.usersService.remove(+id);
+  }
+
+  @Get('me')
+  getProfile(@CurrentUser() currentUser:UserEntity){
+    return currentUser
   }
 }

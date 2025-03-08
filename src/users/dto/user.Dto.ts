@@ -14,3 +14,12 @@ export class createUserDto{
     @MinLength(10, {message: 'Password should be at least 10 characters'})
     password:string
 } 
+
+export class loginUserDto{
+    @IsNotEmpty()
+    @IsEmail({}, {message: 'Email should be valid mail'})
+    email: string;
+
+    @IsNotEmpty()
+    password: string;
+}
