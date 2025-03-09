@@ -32,7 +32,7 @@ export class ProductService {
   }
 
   async findOne(id: number) {
-    const getProductId = await this.productRepository.find({
+    const getProductId = await this.productRepository.findOne({
       where:{
         id: id
       },

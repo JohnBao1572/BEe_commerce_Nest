@@ -7,6 +7,7 @@ import { UsersModule } from './users/users.module';
 import { CurrentUserMiddleware } from './util/middleware/current-user.middleware';
 import { CategoriesModule } from './categories/categories.module';
 import { ProductModule } from './product/product.module';
+import { ReviewsModule } from './reviews/reviews.module';
 
 
 
@@ -14,7 +15,7 @@ import { ProductModule } from './product/product.module';
 
 
 @Module({
-  imports: [TypeOrmModule.forRoot(dataSourceOptions), UsersModule, CategoriesModule, ProductModule],
+  imports: [TypeOrmModule.forRoot(dataSourceOptions), UsersModule, CategoriesModule, ProductModule, ReviewsModule],
   controllers: [AppController],
   providers: [AppService],
 })
