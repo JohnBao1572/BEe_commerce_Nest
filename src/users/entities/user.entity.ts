@@ -1,9 +1,11 @@
 
 import { CategoryEntity } from "src/categories/entities/category.entity";
+import { OrderEntity } from "src/orders/entities/order.entity";
+import { shippingEntity } from "src/orders/entities/shipping.entity";
 import { ProductEntity } from "src/product/entities/product.entity";
 import { ReviewEntity } from "src/reviews/entities/review.entity";
 import { Roles } from "src/util/common/user-role";
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedColumn, Timestamp, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedColumn, Timestamp, UpdateDateColumn } from "typeorm";
 
 @Entity('users')
 export class UserEntity {
@@ -40,4 +42,10 @@ export class UserEntity {
 
     @OneToMany(() => ReviewEntity, (rev) => rev.addedBy)
     reviews: ReviewEntity[]
+
+    @OneToMany(() => OrderEntity, (order)=> order.addedBy)
+    order: OrderEntity[]
+
+    @OneToMany(() => shippingEntity, (shipping)=> shipping.addedBy)
+    shipping: shippingEntity[]
 }
